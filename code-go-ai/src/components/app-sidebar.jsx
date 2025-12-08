@@ -33,8 +33,8 @@ const data = {
           key: "newProblem"
         },
         {
-          title: "New Quiz",
-          key: "newQuiz"
+          title: "Projects",
+          key: "projects"
         },
       ],
     },

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { programmingTopics } from "../constants/data";
 import {
   Item,
@@ -10,7 +10,12 @@ import {
 } from "@/components/ui/item";
 
 export function NewProblem() {
-  return (
+  const [content, setContent] = useState(true);
+  const handleTopic = () => {
+    setContent(false);
+  };
+
+  return content ? (
     <main className="grid grid-rows-[20vh_1fr] items-center p-5">
       <section className="flex justify-center  h-[20vh] items-center">
         <h1>What problem are you looking for to solve?</h1>
@@ -18,7 +23,7 @@ export function NewProblem() {
       </section>
       <ItemGroup className="grid grid-cols-5 gap-5 ">
         {programmingTopics.map((topic, index) => (
-          <Item key={index} variant="outline">
+          <Item key={index} variant="outline" onClick={handleTopic}>
             <ItemHeader>
               <img
                 src={topic.logo}
@@ -36,9 +41,14 @@ export function NewProblem() {
         ))}
       </ItemGroup>
     </main>
+  ) : (
+    <main className="w-full h-full bg-red-400">
+      {/** problem, terminal, output */}
+      
+    </main>
   );
 }
 
-export function NewQuiz() {
+export function Projects() {
   return <h1>new project</h1>;
 }

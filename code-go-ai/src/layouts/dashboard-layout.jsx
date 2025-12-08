@@ -14,14 +14,14 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { useSelector } from "react-redux";
-import { NewProblem, NewQuiz } from "../pages/getting-started";
+import { NewProblem, Projects } from "../pages/getting-started";
 
 export default function DashboardPage() {
   const storeData = useSelector((state) => state.page.value);
 
   const pages = {
     newProblem: <NewProblem />,
-    newQuiz: <NewQuiz />,
+    projects: <Projects />,
   };
   return (
     <SidebarProvider>
