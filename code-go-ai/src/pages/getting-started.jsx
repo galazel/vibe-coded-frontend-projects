@@ -8,12 +8,28 @@ import {
   ItemHeader,
   ItemTitle,
 } from "@/components/ui/item";
+import { Button } from "../components/ui/button";
+import {useQuery} from "@tanstack/react-query"
 
 export function NewProblem() {
   const [content, setContent] = useState(true);
+  const { isPending, error, data, isFetching } = useQuery({
+    queryKey: ["repoData"],
+    queryFn: async () => {
+      const response = await fetch(
+        "http://127.0.0.1:8000/problem/ai_generated_code_problem"
+      );
+      return await response.json();
+    },
+  });
+
   const handleTopic = () => {
     setContent(false);
   };
+
+  if (isPending) return "Loading...";
+
+  if (error) return "An error has occurred: " + error.message;
 
   return content ? (
     <main className="grid grid-rows-[20vh_1fr] items-center p-5">
@@ -42,9 +58,17 @@ export function NewProblem() {
       </ItemGroup>
     </main>
   ) : (
-    <main className="w-full h-full bg-red-400">
-      {/** problem, terminal, output */}
-      
+    <main className="w-full h-full bg-red-400 grid grid-cols-3 gap-2">
+      <div>
+        <h1>{data.full_name}</h1>
+        <p>{data.description}</p>
+        <strong>👀 {data.subscribers_count}</strong>{" "}
+        <strong>✨ {data.stargazers_count}</strong>{" "}
+        <strong>🍴 {data.forks_count}</strong>
+        <div>{isFetching ? "Updating..." : ""}</div>
+      </div>
+      <div>terminal</div>
+      <div>output</div>
     </main>
   );
 }
